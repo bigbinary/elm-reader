@@ -1,7 +1,8 @@
 # Reader
 
-A ```Reader``` is a handy type that can be used in solving the problem of passing down the same values to many functions.
-If there are computations that read value from a shared environment or configurations to be passed around, a Reader can be used in such cases. It is also often used as a way of doing dependency injections. In all such cases by using a Reader the concern of passing the relevant context is mostly handled at the very peripheri of the application
+A ```Reader``` is a handy type that is used for providing a shared "environment" to computations.
+It helps to solve the problem of passing around the same values or configurations to many functions.
+It is also often used as a way of doing dependency injections. In such cases by using a Reader the concern of passing the relevant context is mostly handled at the very peripheri of the application
 
 
 Consider the following
