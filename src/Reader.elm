@@ -49,8 +49,8 @@ map fn reader =
 
 {-| Chain together Readers
 -}
-andThen : Reader context someA -> (someA -> Reader context someB) -> Reader context someB
-andThen reader chainFn =
+andThen : (someA -> Reader context someB) -> Reader context someA -> Reader context someB
+andThen chainFn reader =
     Reader
         (\context ->
             run reader context

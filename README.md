@@ -24,13 +24,13 @@ requestShibaImages apiKey queryParameters =
     requestDogBreed apiKey ("shiba/images" ++ queryParameters) decodeDogImages
 
 
-requestTenShibaImages : String -> Http.Request DogImages
-requestTenShibaImages apiKey =
+requestOneShibaImage : String -> Http.Request DogImages
+requestOneShibaImage apiKey =
     requestShibaImages apiKey "?limit=10"
 
 ```
 
-If you look at ```requestTenShibaImages``` you’ll see ```apiKey``` is not used, but is passed through to the other functions until it reaches ```requestDogBreed``` where it is actually used. Such kind of boilerplate can be avoided with the useage of a ```Reader``` type
+If you look at ```requestOneShibaImage``` you’ll see ```apiKey``` is not used, but is passed through to the other functions until it reaches ```requestDogBreed``` where it is actually used. Such kind of boilerplate can be avoided with the useage of a ```Reader``` type
 
 Instead of ```apiKey``` being passed down to each function, we can use a ```Reader``` and rewrite this in such a way that the context will get passed implicitly.
 
@@ -46,13 +46,13 @@ requestShibaImages queryParameters =
     requestDogBreed ("shiba/images" ++ queryParameters) decodeDogImages
 
 
-requestTenShibaImages : Reader String (Http.Request DogImages)
-requestTenShibaImages =
-    requestShibaImages "?limit=10"
+requestOneShibaImage : Reader String (Http.Request DogImages)
+requestOneShibaImage =
+    requestShibaImages "?limit=1"
 
 ```
 
-Now the intermediate functions ```requestShibaImages``` and ```requestTenShibaImages``` no longer have to take in and pass ```apiKey``` around.
+Now the intermediate functions ```requestShibaImages``` and ```requestOneShibaImage``` no longer have to take in and pass ```apiKey``` around.
 
 When we finally want to send the Http Request we can use the ```run``` function to pass in the context to the Reader and retrive the value i.e the final Request
 
@@ -63,6 +63,6 @@ type Msg
 send : Cmd Msg
 send =
     Http.send LoadShibaImages <|
-        run requestTenShibaImages "123456"
+        run requestOneShibaImage "123456"
 
 ```

@@ -1,1 +1,5 @@
+.DS_Store
 elm-stuff
+examples/index.html
+examples/elm-stuff
+tests/elm-stuff
