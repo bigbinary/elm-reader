@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "Reader for elm",
+    "summary": "Reader type in Elm",
     "repository": "https://github.com/bigbinary/elm-reader.git",
     "license": "MIT",
     "source-directories": [
