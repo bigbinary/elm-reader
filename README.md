@@ -30,7 +30,7 @@ requestOneShibaImage apiKey =
 
 ```
 
-If you look at ```requestOneShibaImage``` you’ll see ```apiKey``` is not used, but is passed through to the other functions until it reaches ```requestDogBreed``` where it is actually used. Such kind of boilerplate can be avoided with the useage of a ```Reader``` type
+If you look at ```requestOneShibaImage``` you’ll see ```apiKey``` is not used, but is passed through to the other functions until it reaches ```requestDogBreed``` where it is actually used. Such kind of boilerplate can be avoided with the usage of a ```Reader``` type
 
 Instead of ```apiKey``` being passed down to each function, we can use a ```Reader``` and rewrite this in such a way that the context will get passed implicitly.
 
