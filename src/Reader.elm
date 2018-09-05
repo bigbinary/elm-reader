@@ -1,6 +1,6 @@
 module Reader exposing
     ( Reader(..)
-    , run, ask
+    , run, ask, reader, local
     , map
     , andThen
     )
@@ -17,7 +17,7 @@ a Reader can be used in all such cases. It is also often used as a way of doing 
 
 # Helpers
 
-@docs run, ask
+@docs run, ask, reader, local
 
 
 # Mapping
@@ -38,7 +38,14 @@ type Reader context someA
     = Reader (context -> someA)
 
 
-{-| Returns a Reader that when run with a context value gives back the context value as is
+{-| Returns a Reader that when run will produce the value provided, no matter what the context.
+-}
+reader : value -> Reader env value
+reader x =
+    Reader <| always x
+
+
+{-| Returns a Reader that when run with a context value gives back the context value as is.
 -}
 ask : Reader context context
 ask =
@@ -56,17 +63,24 @@ run (Reader f) context =
 {-| Transform a Reader
 -}
 map : (someA -> someB) -> Reader context someA -> Reader context someB
-map fn reader =
-    Reader (\context -> fn (run reader context))
+map fn (Reader rfn) =
+    Reader (rfn >> fn)
 
 
 {-| Chain together Readers
 -}
 andThen : (someA -> Reader context someB) -> Reader context someA -> Reader context someB
-andThen chainFn reader =
+andThen chainFn freader =
     Reader
         (\context ->
-            run reader context
+            run freader context
                 |> chainFn
                 |> (\b a -> run a b) context
         )
+
+
+{-| Modify the context of a Reader
+-}
+local : (context -> context) -> Reader context someA -> Reader context someA
+local fn (Reader rfn) =
+    Reader (fn >> rfn)
