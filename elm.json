@@ -1,0 +1,16 @@
+{
+    "type": "package",
+    "name": "bigbinary/elm-reader",
+    "summary": "Reader type in Elm",
+    "license": "MIT",
+    "version": "1.0.1",
+    "exposed-modules": [
+        "Reader"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0"
+    },
+    "test-dependencies": {}
+}

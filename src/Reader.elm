@@ -1,11 +1,9 @@
-module Reader
-    exposing
-        ( Reader(Reader)
-        , run
-        , ask
-        , map
-        , andThen
-        )
+module Reader exposing
+    ( Reader(..)
+    , run, ask
+    , map
+    , andThen
+    )
 
 {-| A Reader helps in solving the problem of passing down the same values to many functions.
 If there are computations that read value from a shared environment or configurations to be passed around,
@@ -70,5 +68,5 @@ andThen chainFn reader =
         (\context ->
             run reader context
                 |> chainFn
-                |> (flip run) context
+                |> (\b a -> run a b) context
         )
