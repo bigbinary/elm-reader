@@ -3,6 +3,7 @@ module Reader exposing
     , run, ask, reader, local
     , map
     , andThen
+    , all
     )
 
 {-| A Reader helps in solving the problem of passing down the same values to many functions.
@@ -84,3 +85,10 @@ andThen chainFn freader =
 local : (context -> context) -> Reader context someA -> Reader context someA
 local fn (Reader rfn) =
     Reader (fn >> rfn)
+
+
+{-| Transform a list of computations into a single computation whose result is a list of values
+-}
+all : List (Reader a b) → Reader a (List b)
+all readers =
+    Reader (\context → readers |> List.map (\reader → Reader.run reader context))
